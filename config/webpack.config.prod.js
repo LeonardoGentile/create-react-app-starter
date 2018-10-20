@@ -19,6 +19,7 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 
 const alias = require('./alias');
+const sassConfig = require('./sassConfig');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -51,7 +52,7 @@ const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 // common function to get style loaders
-const getStyleLoaders = (cssOptions, preProcessor) => {
+const getStyleLoaders = (cssOptions, preProcessorLoaders) => {
   const loaders = [
     {
       loader: MiniCssExtractPlugin.loader,
@@ -86,13 +87,11 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
       },
     },
   ];
-  if (preProcessor) {
-    loaders.push({
-      loader: require.resolve(preProcessor),
-      options: {
-        sourceMap: shouldUseSourceMap,
-      },
-    });
+  if (preProcessorLoaders) {
+    // If we pass in an array of loader configs
+    preProcessorLoaders.forEach((loaderConf) => {
+      loaders.push(loaderConf);
+    })
   }
   return loaders;
 };
@@ -369,7 +368,21 @@ module.exports = {
                 importLoaders: 2,
                 sourceMap: shouldUseSourceMap,
               },
-              'sass-loader'
+              [{
+                loader: require.resolve('sass-loader'),
+                options: {
+                  sourceMap: shouldUseSourceMap,
+                  outputStyle: "expanded",
+                  indentedSyntax: "sass",
+                  includePaths: sassConfig.sassIncludePaths
+                }
+              },
+              {
+                loader: require.resolve('sass-resources-loader'),
+                options: {
+                  resources: sassConfig.sassResourcesPaths
+                },
+              }]
             ),
             // Don't consider CSS imports dead code even if the
             // containing package claims to have no side effects.
@@ -388,7 +401,21 @@ module.exports = {
                 modules: true,
                 getLocalIdent: getCSSModuleLocalIdent,
               },
-              'sass-loader'
+              [{
+                loader: require.resolve('sass-loader'),
+                options: {
+                  sourceMap: shouldUseSourceMap,
+                  outputStyle: "expanded",
+                  indentedSyntax: "sass",
+                  includePaths: sassConfig.sassIncludePaths
+                }
+              },
+              {
+                loader: require.resolve('sass-resources-loader'),
+                options: {
+                  resources: sassConfig.sassResourcesPaths
+                },
+              }]
             ),
           },
           // "file" loader makes sure assets end up in the `build` folder.

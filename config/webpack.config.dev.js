@@ -15,6 +15,7 @@ const ManifestPlugin = require('webpack-manifest-plugin');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 
 const alias = require('./alias');
+const sassConfig = require('./sassConfig');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -33,7 +34,7 @@ const sassRegex = /\.(scss|sass)$/;
 const sassModuleRegex = /\.module\.(scss|sass)$/;
 
 // common function to get style loaders
-const getStyleLoaders = (cssOptions, preProcessor) => {
+const getStyleLoaders = (cssOptions, preProcessorLoaders) => {
   const loaders = [
     require.resolve('style-loader'),
     {
@@ -61,8 +62,11 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
       },
     },
   ];
-  if (preProcessor) {
-    loaders.push(require.resolve(preProcessor));
+  if (preProcessorLoaders) {
+    // If we pass in an array of loader configs
+    preProcessorLoaders.forEach((loaderConf) => {
+      loaders.push(loaderConf);
+    })
   }
   return loaders;
 };
@@ -296,7 +300,23 @@ module.exports = {
           {
             test: sassRegex,
             exclude: sassModuleRegex,
-            use: getStyleLoaders({ importLoaders: 2 }, 'sass-loader'),
+            use: getStyleLoaders({ importLoaders: 2 },
+              [{
+                loader: require.resolve('sass-loader'),
+                options: {
+                  sourceMap: true,
+                  outputStyle: "expanded",
+                  indentedSyntax: "sass",
+                  includePaths: sassConfig.sassIncludePaths
+                }
+              },
+              {
+                loader: require.resolve('sass-resources-loader'),
+                options: {
+                  resources: sassConfig.sassResourcesPaths
+                },
+              }]
+            ),
           },
           // Adds support for CSS Modules, but using SASS
           // using the extension .module.scss or .module.sass
@@ -308,7 +328,21 @@ module.exports = {
                 modules: true,
                 getLocalIdent: getCSSModuleLocalIdent,
               },
-              'sass-loader'
+              [{
+                loader: require.resolve('sass-loader'),
+                options: {
+                  sourceMap: true,
+                  outputStyle: "expanded",
+                  indentedSyntax: "sass",
+                  includePaths: sassConfig.sassIncludePaths
+                }
+              },
+              {
+                loader: require.resolve('sass-resources-loader'),
+                options: {
+                  resources: sassConfig.sassResourcesPaths
+                },
+              }]
             ),
           },
           // "file" loader makes sure those assets get served by WebpackDevServer.
