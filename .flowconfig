@@ -9,5 +9,6 @@
 [options]
 module.file_ext=.sass
 module.file_ext=.scss
+module.system.node.resolve_dirname=node_modules
 
 [strict]
