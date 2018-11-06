@@ -1,6 +1,8 @@
 // @flow
 import { combineReducers } from "redux";
 import type { Todos, Todo, Id, Text, Action, VisibilityFilter } from "./types";
+import a from "./types";
+import c from "./constants";
 
 /* state shape
 todosState {
@@ -23,9 +25,9 @@ function toggleTodo(todos: Todos, id: Id): Todos {
 
 const todos = (state: Todos = [], action: Action): Todos => {
   switch (action.type) {
-    case "ADD_TODO":
+    case a.ADD_TODO:
       return [...state, createTodo(action.id, action.text)];
-    case "TOGGLE_TODO":
+    case a.TOGGLE_TODO:
       return toggleTodo(state, action.id);
     default:
       return state;
@@ -33,11 +35,11 @@ const todos = (state: Todos = [], action: Action): Todos => {
 };
 
 const visibilityFilter = (
-  state: VisibilityFilter = "SHOW_ALL",
+  state: VisibilityFilter = c.SHOW_ALL,
   action: Action
 ): VisibilityFilter => {
   switch (action.type) {
-    case "SET_VISIBILITY_FILTER":
+    case a.SET_VISIBILITY_FILTER:
       return action.filter;
     default:
       return state;

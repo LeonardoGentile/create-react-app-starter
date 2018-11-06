@@ -1,11 +1,13 @@
 // @flow
 import type { Id, Text, VisibilityFilter, Action } from "./types";
+import a from "./types";
 
 let nextTodoId: Id = 0;
 
+// TODO: use payload field
 export const addTodo = (text: Text): Action => {
   return {
-    type: "ADD_TODO",
+    type: a.ADD_TODO,
     id: nextTodoId++,
     text
   };
@@ -13,14 +15,14 @@ export const addTodo = (text: Text): Action => {
 
 export const setVisibilityFilter = (filter: VisibilityFilter): Action => {
   return {
-    type: "SET_VISIBILITY_FILTER",
+    type: a.SET_VISIBILITY_FILTER,
     filter
   };
 };
 
 export const toggleTodo = (id: Id): Action => {
   return {
-    type: "TOGGLE_TODO",
+    type: a.TOGGLE_TODO,
     id
   };
 };

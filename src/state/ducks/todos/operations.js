@@ -1,18 +1,22 @@
 // @flow
-import actions from "./actions";
 import type { Id, Text, VisibilityFilter, Action } from "./types";
+import actions from "./actions";
 
-const addTodo = (text: Text): Action => {
-  return actions.addTodo(text);
-};
+// Simple links to actions
+const addTodo = actions.addTodo;
 
-const setVisibilityFilter = (filter: VisibilityFilter): Action => {
-  return actions.setVisibilityFilter(filter);
-};
+const setVisibilityFilter = actions.setVisibilityFilter;
 
-const toggleTodo = (id: Id): Action => {
-  return actions.toggleTodo(id);
-};
+const toggleTodo = actions.toggleTodo;
+
+// This is a thunk which dispatches multiple actions from actions.js
+// const complexOperation = (distance) => (dispatch) => {
+//   dispatch(actions.quack())
+//     .then(() => {
+//       dispatch(actions.swim(distance));
+//       dispatch(/* any action */);
+//     });
+// };
 
 export default {
   addTodo,

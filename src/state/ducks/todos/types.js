@@ -1,30 +1,57 @@
 // @flow
-import type { Store as ReduxStore, Dispatch as ReduxDispatch } from "redux";
+import type {Store as ReduxStore, Dispatch as ReduxDispatch} from "redux";
+import c from "./constants";
 
-export type Id = number;
+// Actions
+const ADD_TODO = "app/duck/ADD_TODO";
+const SET_VISIBILITY_FILTER = "app/duck/SET_VISIBILITY_FILTER";
+const TOGGLE_TODO = "app/duck/TOGGLE_TODO";
 
-export type Text = string;
+type Id = number;
 
-export type Todo = {
+type Text = string;
+
+type Todo = {
   +id: Id,
   +text: Text,
   +completed: boolean
 };
 
-export type VisibilityFilter = "SHOW_ALL" | "SHOW_ACTIVE" | "SHOW_COMPLETED";
+type Todos = Array<Todo>;
 
-export type Todos = Array<Todo>;
 
-export type todosState = {
+type VisibilityFilter = c.SHOW_ALL | c.SHOW_COMPLETED | c.SHOW_ACTIVE;
+
+
+type todosState = {
   +todos: Todos,
   +visibilityFilter: VisibilityFilter
 };
 
-export type Action =
-  | { type: "ADD_TODO", +id: Id, +text: Text }
-  | { type: "SET_VISIBILITY_FILTER", +filter: VisibilityFilter }
-  | { type: "TOGGLE_TODO", +id: Id };
+type Action =
+  | { type: ADD_TODO, +id: Id, +text: Text }
+  | { type: TOGGLE_TODO, +id: Id }
+  | { type: SET_VISIBILITY_FILTER, +filter: VisibilityFilter };
 
-export type Store = ReduxStore<todosState, Action>;
+type Store = ReduxStore<todosState, Action>;
 
-export type Dispatch = ReduxDispatch<Action>;
+type Dispatch = ReduxDispatch<Action>;
+
+
+export {
+  Id,
+  Text,
+  Todo,
+  Todos,
+  VisibilityFilter,
+  todosState,
+  Action,
+  Store,
+  Dispatch,
+}
+
+export default {
+  ADD_TODO,
+  SET_VISIBILITY_FILTER,
+  TOGGLE_TODO
+}
