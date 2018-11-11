@@ -1,5 +1,4 @@
 // @flow
-import type { Id, Text, VisibilityFilter, Action } from "./types";
 import actions from "./actions";
 
 // Simple links to actions

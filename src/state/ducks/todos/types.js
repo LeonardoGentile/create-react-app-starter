@@ -1,14 +1,7 @@
 // @flow
-import type {Store as ReduxStore, Dispatch as ReduxDispatch} from "redux";
 import c from "./constants";
 
-// Actions
-const ADD_TODO = "app/duck/ADD_TODO";
-const SET_VISIBILITY_FILTER = "app/duck/SET_VISIBILITY_FILTER";
-const TOGGLE_TODO = "app/duck/TOGGLE_TODO";
-
-export const ACTION_TYPES = {ADD_TODO, SET_VISIBILITY_FILTER, TOGGLE_TODO};
-
+// STATE COMPONENTS
 export type Id = number;
 
 export type Text = string;
@@ -21,20 +14,39 @@ export type Todo = {
 
 export type Todos = Array<Todo>;
 
+// Filters
+export type VisibilityFilter =
+  | c.SHOW_ALL
+  | c.SHOW_COMPLETED
+  | c.SHOW_ACTIVE;
 
-export type VisibilityFilter = c.SHOW_ALL | c.SHOW_COMPLETED | c.SHOW_ACTIVE;
+
+// Actions
+type AddAction = {
+  type: c.ADD_TODO,
+  +payload: {
+    id: Id,
+    text: Text
+  }
+}
+
+type ToggleAction = {
+  type: c.TOGGLE_TODO,
+  +payload: {
+    id: Id
+  }
+}
+
+type SetFilterAction = {
+  type: c.SET_VISIBILITY_FILTER,
+  +payload: {
+    filter: VisibilityFilter
+  }
+}
+
+export type TodoAction =
+  | AddAction
+  | ToggleAction
+  | SetFilterAction
 
 
-export type todosState = {
-  +todos: Todos,
-  +visibilityFilter: VisibilityFilter
-};
-
-export type Action =
-  | { type: ADD_TODO, +id: Id, +text: Text }
-  | { type: TOGGLE_TODO, +id: Id }
-  | { type: SET_VISIBILITY_FILTER, +filter: VisibilityFilter };
-
-export type TodoStore = ReduxStore<todosState, Action>;
-
-export type Dispatch = ReduxDispatch<Action>;

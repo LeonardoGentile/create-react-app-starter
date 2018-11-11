@@ -1,6 +1,14 @@
 // @flow
-import { createStore, applyMiddleware, combineReducers, compose } from "redux";
+import {createStore, applyMiddleware, combineReducers, compose} from "redux";
+import type {Store as ReduxStore, Dispatch as ReduxDispatch} from "redux";
+
 import * as reducers from "./ducks"; // import all reducers from ducks/index.js
+import type {RootState, RootAction} from "./ducks/types";
+
+
+export type RootStore = ReduxStore<RootState, RootAction>;
+export type Dispatch = ReduxDispatch<RootAction>;
+
 
 /* eslint-disable no-underscore-dangle */
 const composeEnhancers =
@@ -15,7 +23,7 @@ const enhancer = composeEnhancers(
   // other store enhancers if any
 );
 
-export default function configureStore(initialState: any = {}) {
+export default function configureStore(initialState: any = {}): RootStore {
   const rootReducer = combineReducers(reducers);
   return createStore(
     rootReducer,

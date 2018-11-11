@@ -1,9 +1,8 @@
 // @flow
 import { combineReducers } from "redux";
-import {ACTION_TYPES as a} from "./types";
 import c from "./constants";
 
-import type { Todos, Todo, Id, Text, Action, VisibilityFilter } from "./types";
+import type { Todos, Todo, Id, Text, TodoAction, VisibilityFilter } from "./types";
 
 /* state shape
 todosState {
@@ -24,32 +23,40 @@ function toggleTodo(todos: Todos, id: Id): Todos {
   });
 }
 
-const todos = (state: Todos = [], action: Action): Todos => {
+const todos = (state: Todos = [], action: TodoAction): Todos => {
   switch (action.type) {
-    case a.ADD_TODO:
-      return [...state, createTodo(action.id, action.text)];
-    case a.TOGGLE_TODO:
-      return toggleTodo(state, action.id);
+    case c.ADD_TODO:
+      const payload = action.payload;
+      return [...state, createTodo(payload.id, payload.text)];
+    case c.TOGGLE_TODO:
+      return toggleTodo(state, action.payload.id);
     default:
       return state;
   }
 };
+
 
 const visibilityFilter = (
   state: VisibilityFilter = c.SHOW_ALL,
-  action: Action
+  action: TodoAction
 ): VisibilityFilter => {
   switch (action.type) {
-    case a.SET_VISIBILITY_FILTER:
-      return action.filter;
+    case c.SET_VISIBILITY_FILTER:
+      return action.payload.filter;
     default:
       return state;
   }
 };
 
-const todosReducer = combineReducers({
-  todos: todos,
-  visibilityFilter: visibilityFilter
-});
+// Necessary to extract the state from reducers
+const reducers = {
+  todos,
+  visibilityFilter
+};
 
-export default todosReducer;
+export type todosReducersTypes = typeof reducers;
+
+
+const todosReducers = combineReducers(reducers);
+
+export default todosReducers;

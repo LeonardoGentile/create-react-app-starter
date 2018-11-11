@@ -1,28 +1,28 @@
 // @flow
-import type {Id, Text, VisibilityFilter, Action} from "./types";
-import {ACTION_TYPES as a} from "./types";
+import type {Id, Text, VisibilityFilter, TodoAction} from "./types";
+import c from "./constants"
 
 let nextTodoId: Id = 0;
 
 // TODO: use payload field
-export const addTodo = (text: Text): Action => {
+export const addTodo = (text: Text): TodoAction => {
   return {
-    type: a.ADD_TODO,
+    type: c.ADD_TODO,
     id: nextTodoId++,
     text
   };
 };
 
-export const setVisibilityFilter = (filter: VisibilityFilter): Action => {
+export const setVisibilityFilter = (filter: VisibilityFilter): TodoAction => {
   return {
-    type: a.SET_VISIBILITY_FILTER,
+    type: c.SET_VISIBILITY_FILTER,
     filter
   };
 };
 
-export const toggleTodo = (id: Id): Action => {
+export const toggleTodo = (id: Id): TodoAction => {
   return {
-    type: a.TOGGLE_TODO,
+    type: c.TOGGLE_TODO,
     id
   };
 };

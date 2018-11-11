@@ -6,7 +6,7 @@ import {Provider} from 'react-redux';
 
 // store & types
 import configureStore from "./state/store";
-import {todosTypes} from "./state/ducks/todos";
+
 
 // containers & components
 import App from './App';
@@ -15,7 +15,7 @@ import './index.css';
 // conf
 import * as serviceWorker from './serviceWorker';
 
-const reduxStore: todosTypes.TodoStore = configureStore(window.REDUX_INITIAL_DATA);
+const reduxStore = configureStore(window.REDUX_INITIAL_DATA);
 
 ReactDOM.render(
   <Provider store={reduxStore}>

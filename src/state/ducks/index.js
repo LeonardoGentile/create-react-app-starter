@@ -1,2 +1,2 @@
 // @flow
-export { default as todosState } from "./todos";
+export {default as todosReducers} from "./todos";
