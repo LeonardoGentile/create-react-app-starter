@@ -1,8 +1,9 @@
 // @flow
 import { combineReducers } from "redux";
-import type { Todos, Todo, Id, Text, Action, VisibilityFilter } from "./types";
-import a from "./types";
+import {ACTION_TYPES as a} from "./types";
 import c from "./constants";
+
+import type { Todos, Todo, Id, Text, Action, VisibilityFilter } from "./types";
 
 /* state shape
 todosState {

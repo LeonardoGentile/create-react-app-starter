@@ -1,6 +1,6 @@
 // @flow
-import type { Todos, VisibilityFilter } from "./types";
 import c from "./constants";
+import type { Todos, VisibilityFilter } from "./types";
 
 const getVisibleTodos = (todos: Todos, filter: VisibilityFilter): Todos => {
   switch (filter) {

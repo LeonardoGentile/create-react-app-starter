@@ -1,6 +1,6 @@
 // @flow
-import type { Id, Text, VisibilityFilter, Action } from "./types";
-import a from "./types";
+import type {Id, Text, VisibilityFilter, Action} from "./types";
+import {ACTION_TYPES as a} from "./types";
 
 let nextTodoId: Id = 0;
 

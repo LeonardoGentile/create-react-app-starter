@@ -7,51 +7,34 @@ const ADD_TODO = "app/duck/ADD_TODO";
 const SET_VISIBILITY_FILTER = "app/duck/SET_VISIBILITY_FILTER";
 const TOGGLE_TODO = "app/duck/TOGGLE_TODO";
 
-type Id = number;
+export const ACTION_TYPES = {ADD_TODO, SET_VISIBILITY_FILTER, TOGGLE_TODO};
 
-type Text = string;
+export type Id = number;
 
-type Todo = {
+export type Text = string;
+
+export type Todo = {
   +id: Id,
   +text: Text,
   +completed: boolean
 };
 
-type Todos = Array<Todo>;
+export type Todos = Array<Todo>;
 
 
-type VisibilityFilter = c.SHOW_ALL | c.SHOW_COMPLETED | c.SHOW_ACTIVE;
+export type VisibilityFilter = c.SHOW_ALL | c.SHOW_COMPLETED | c.SHOW_ACTIVE;
 
 
-type todosState = {
+export type todosState = {
   +todos: Todos,
   +visibilityFilter: VisibilityFilter
 };
 
-type Action =
+export type Action =
   | { type: ADD_TODO, +id: Id, +text: Text }
   | { type: TOGGLE_TODO, +id: Id }
   | { type: SET_VISIBILITY_FILTER, +filter: VisibilityFilter };
 
-type Store = ReduxStore<todosState, Action>;
+export type TodoStore = ReduxStore<todosState, Action>;
 
-type Dispatch = ReduxDispatch<Action>;
-
-
-export {
-  Id,
-  Text,
-  Todo,
-  Todos,
-  VisibilityFilter,
-  todosState,
-  Action,
-  Store,
-  Dispatch,
-}
-
-export default {
-  ADD_TODO,
-  SET_VISIBILITY_FILTER,
-  TOGGLE_TODO
-}
+export type Dispatch = ReduxDispatch<Action>;

@@ -3,16 +3,19 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
+
 // store & types
 import configureStore from "./state/store";
-import todosTypes from "./state/ducks/todos";
+import {todosTypes} from "./state/ducks/todos";
+
 // containers & components
 import App from './App';
 import './index.css';
-// Conf
+
+// conf
 import * as serviceWorker from './serviceWorker';
 
-const reduxStore: todosTypes.Store = configureStore(window.REDUX_INITIAL_DATA);
+const reduxStore: todosTypes.TodoStore = configureStore(window.REDUX_INITIAL_DATA);
 
 ReactDOM.render(
   <Provider store={reduxStore}>
